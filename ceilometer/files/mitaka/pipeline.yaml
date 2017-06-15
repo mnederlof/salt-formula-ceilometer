@@ -24,7 +24,6 @@ sources:
         {%- endfor %}
 
   {%- endfor %}
-
 sinks:
   {%- for sink_name, sink in sinks.iteritems() %}
     - name: {{ sink_name }}
@@ -32,7 +31,6 @@ sinks:
         {%- for transformer in sink.get('transformers', []) %}
           - {{ transformer }}
         {%- endfor %}
-
       publishers:
         {%- for publisher_name, publisher in sink.get('publishers', {'default': {}}).iteritems() %}
           {%- if publisher_name == 'default' %}
