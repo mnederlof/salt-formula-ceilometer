@@ -151,26 +151,6 @@ Ceilometer-agent-central pipeline customizations
             pubishers:
               default:
 
-Ceilometer-agent-compute pipeline customizations
-
-.. code-block:: yaml
-
-    ceilometer:
-      agent:
-        ...
-        sources:
-          meter_source:
-            interval: 300
-            meters:
-            - '*'
-            sinks:
-            - meter_sink
-        sinks:
-          meter_sink:
-            pubishers:
-              default:
-
-
 
 Ceilometer compute agent
 ------------------------
@@ -198,6 +178,24 @@ Ceilometer compute agent
           virtual_host: '/openstack'
           rabbit_ha_queues: true
 
+Ceilometer compute agent pipeline customizations
+
+.. code-block:: yaml
+
+    ceilometer:
+      agent:
+        ...
+        sources:
+          meter_source:
+            interval: 300
+            meters:
+            - '*'
+            sinks:
+            - meter_sink
+        sinks:
+          meter_sink:
+            pubishers:
+              default:
 
 Ceilometer instance discovery method
 ------------------------------------
