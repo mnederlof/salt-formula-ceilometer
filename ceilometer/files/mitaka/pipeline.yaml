@@ -32,7 +32,7 @@ sinks:
           - {{ transformer }}
         {%- endfor %}
       publishers:
-        {%- for publisher_name, publisher in sink.get('publishers', {'default': {}}).iteritems() %}
+        {%- for publisher_name, publisher in sink.get('publishers', publisher).iteritems() %}
           {%- if publisher_name == 'default' %}
           - notifier://
           {%- endif %}
