@@ -11,33 +11,36 @@
 {%- endif %}
 ---
 sources:
-{%- for source_name, source in sources.iteritems() %}
+  {%- for source_name, source in sources.iteritems() %}
     - name: {{ source_name }}
       interval: {{ source.get('interval', '60') }}
       meters:
-{%-   for meter in source.get('meters', ['*']) %}
+        {%- for meter in source.get('meters', ['*']) %}
           - "{{ meter }}"
-{%-   endfor %}
+        {%- endfor %}
       sinks:
-{%-   for sink in source.get('sinks', ['meter_sink']) %}
-          - "{{ sink }}"
-{%-   endfor %}
-{%- endfor %}
+        {%- for sink in source.get('sinks', ['meter_sink']) %}
+          - {{ sink }}
+        {%- endfor %}
+
+  {%- endfor %}
 
 sinks:
-{%- for sink_name, sink in sinks.iteritems() %}
+  {%- for sink_name, sink in sinks.iteritems() %}
     - name: {{ sink_name }}
       transformers:
-{%-   for transformer in sink.get('transformers', []) %}
-          - "{{ transformer }}"
-{%-   endfor %}
+        {%- for transformer in sink.get('transformers', []) %}
+          - {{ transformer }}
+        {%- endfor %}
+
       publishers:
-{%-   for publisher_name, publisher in sink.get('publishers', {'default': {}}).iteritems() %}
+        {%- for publisher_name, publisher in sink.get('publishers', {'default': {}}).iteritems() %}
           {%- if publisher_name == 'default' %}
           - notifier://
           {%- endif %}
           {%- if publisher_name == 'graphite' %}
           - graphite://{{ publisher.host }}:{{ publisher.port }}
           {%- endif %}
-{%-   endfor %}
-{%- endfor %}
+        {%- endfor %}
+
+  {%- endfor %}
